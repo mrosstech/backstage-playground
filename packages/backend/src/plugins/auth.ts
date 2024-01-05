@@ -16,7 +16,7 @@ export default async function createPlugin(
     discovery: env.discovery,
     tokenManager: env.tokenManager,
     providerFactories: {
-      ...defaultAuthProviderFactories,
+      //...defaultAuthProviderFactories,
 
       // This replaces the default GitHub auth provider with a customized one.
       // The `signIn` option enables sign-in for this provider, using the
@@ -37,16 +37,7 @@ export default async function createPlugin(
       //   https://backstage.io/docs/auth/identity-resolver
       github: providers.github.create({
         signIn: {
-          resolver(_, ctx) {
-            const userRef = 'user:default/guest'; // Must be a full entity reference
-            return ctx.issueToken({
-              claims: {
-                sub: userRef, // The user's own identity
-                ent: [userRef], // A list of identities that the user claims ownership through
-              },
-            });
-          },
-          // resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
+          resolver: providers.github.resolvers.usernameMatchingUserEntityName(),
         },
       }),
     },

@@ -6,7 +6,6 @@ metadata:
   title: Example Node.js Template
   description: An example template for the scaffolder that creates a simple Node.js service
 spec:
-  owner: user:guest
   type: service
 
   # These parameters are used to generate the input form in the frontend, and are
@@ -23,6 +22,14 @@ spec:
           ui:autofocus: true
           ui:options:
             rows: 5
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the component
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: [Group, User]
     - title: Choose a location
       required:
         - repoUrl
@@ -45,6 +52,7 @@ spec:
       input:
         url: ./content
         values:
+          owner: ${{ parameters.owner }}
           name: ${{ parameters.name }}
 
     # This step publishes the contents of the working directory to GitHub.
